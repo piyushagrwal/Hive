@@ -2,12 +2,14 @@ import { Router } from "express";
 
 const router = Router();
 
-import { createJob, deleteJob, getAllJobs, getJob, updateJob } from '../controllers/jobController.js';
+import { createJob, deleteJob, getAllJobs, getJob, showStats, updateJob } from '../controllers/jobController.js';
 import {validateJobInput, validateIdParam} from '../middleware/validationMiddleware.js'
+import { checkForTestUser } from "../middleware/authMiddleware.js";
 
-router.route('/').get(getAllJobs).post(validateJobInput, createJob);
+router.route('/').get(getAllJobs).post(checkForTestUser ,validateJobInput, createJob);
+router.route('/stats').get(showStats);
 router.route('/:id').get(validateIdParam, getJob)
-                    .patch(validateJobInput, validateIdParam, updateJob)
-                    .delete(validateIdParam, deleteJob);
+                    .patch(checkForTestUser, validateJobInput, validateIdParam, updateJob)
+                    .delete(checkForTestUser, validateIdParam, deleteJob);
 
 export default router

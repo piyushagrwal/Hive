@@ -39,7 +39,7 @@ export const validateIdParam = withValidationErrors([
         const isValidId = mongoose.Types.ObjectId.isValid(value);
         if(!isValidId) throw new BadRequestError('Invalid Id');
         const job = await Job.findById(value);
-        console.log(job);
+        // console.log(job);
         if(!job) throw new NotFoundError(`No job exists for given id ${value}`);
         const isAdmin = req.user.role === 'admin';
         const isOwner = (req.user.userId === job.createdBy.toString());
@@ -71,8 +71,8 @@ export const validateUpdateUserInput = withValidationErrors([
     body('name').notEmpty().withMessage('Name is required'),
     body('email').notEmpty().withMessage('Email is required').isEmail().withMessage('Invalid Email format')
         .custom(async (email, {req}) =>{
-            const user = User.findOne({email});
-            if(user && user._id.toString() === req.user.userId){
+            const user = await User.findOne({email});
+            if(user && user._id.toString() !== req.user.userId){
                 throw new BadRequestError('Email already exists');
             } 
         }),

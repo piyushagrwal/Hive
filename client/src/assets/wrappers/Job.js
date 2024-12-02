@@ -76,6 +76,7 @@ const Wrapper = styled.article`
   .edit-btn {
     margin-right: 0.5rem;
   }
+  
 `;
 
 export default Wrapper;
