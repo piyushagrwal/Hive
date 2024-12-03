@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import cloudinary from 'cloudinary';
+import helmet from 'helmet';
+import mongSanitize from 'express-mongo-sanitize';
 
 //Show log for request type and status
 import morgan from 'morgan';
@@ -37,6 +39,8 @@ if(process.env.NODE_ENV === 'development'){
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(helmet());
+app.use(mongSanitize());
 
 const port = process.env.PORT || 5100;
 

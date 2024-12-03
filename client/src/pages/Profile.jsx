@@ -1,11 +1,11 @@
 import React from 'react'
-import { Form, useOutletContext } from 'react-router-dom'
+import { Form, redirect, useOutletContext } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { FormRow, SubmitBtn } from '../components';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
 
-export const action = async ({request}) => {
+export const action = (queryClient) => async ({request}) => {
   try {
     const formData = await request.formData();
     const file = formData.get('avatar');
@@ -14,11 +14,13 @@ export const action = async ({request}) => {
       return null;
     }
     await customFetch.patch('/users/update-user', formData);
+    queryClient.invalidateQueries(['user']);
     toast.success('Profile updated successfully')
+    return redirect('/dashboard');
   } catch (error) {
     toast.error(error?.response?.data?.message);
+    return null;
   }
-  return null;
 }
 
 const Profile = () => {
