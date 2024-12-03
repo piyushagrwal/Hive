@@ -12,6 +12,7 @@ export const action = (queryClient) => async({request}) => {
   try {
     await customFetch.post('/jobs', data);
     queryClient.invalidateQueries(['jobs']);
+    queryClient.invalidateQueries(['stats']);
     toast.success('Job added successfully')
     return redirect('all-jobs');
   } catch (error) {

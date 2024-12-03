@@ -32,6 +32,7 @@ export const action = (queryClient) => async({request, params}) => {
   try {
     await customFetch.patch(`/jobs/${params.id}`, data);
     queryClient.invalidateQueries(['jobs']);
+    queryClient.invalidateQueries(['stats']);
     toast.success('Job edited successfully');
     return redirect('/dashboard/all-jobs');
   } catch (error) {
