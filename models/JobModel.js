@@ -22,6 +22,10 @@ const JobSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'User',
     },
+    remarks: {
+      type: String,
+      maxLength: 100
+    }
   },
   { timestamps: true }
 );

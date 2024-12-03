@@ -10,15 +10,15 @@ import { useQuery } from '@tanstack/react-query';
 const singleJobQuery = (id) => {
   return {
     queryKey: ['job', id],
-    queryFn: async ()=>{
+    queryFn: async () =>{
       const {data} = await customFetch.get(`/jobs/${id}`);
-      return data
+      return data;
     }
   }
 }
 export const loader = (queryClient) => async ({params}) => {
   try {
-    await queryClient.ensureQueryData(params.id);
+    await queryClient.ensureQueryData(singleJobQuery(params.id));
     return params.id;
   } catch (error) {
     toast.error(error?.response?.data?.message);
@@ -53,6 +53,7 @@ const EditJob = () => {
           <FormRow type='text' name='jobLocation' defaultValue={job.jobLocation}/>
           <FormRowSelect name='jobStatus' labelText='Job status' defaultValue={job.jobStatus} list={Object.values(JOB_STATUS)}/>
           <FormRowSelect name='jobType' labelText='Job type' defaultValue={job.jobType} list={Object.values(JOB_TYPE)}/>
+          <FormRow type='text' name='remarks' defaultValue={job.remarks}/>
           <SubmitBtn formBtn />
         </div>
       </Form>
