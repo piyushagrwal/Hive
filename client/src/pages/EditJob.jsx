@@ -55,8 +55,8 @@ const EditJob = () => {
           <FormRowSelect name='jobStatus' labelText='Job status' defaultValue={job.jobStatus} list={Object.values(JOB_STATUS)}/>
           <FormRowSelect name='jobType' labelText='Job type' defaultValue={job.jobType} list={Object.values(JOB_TYPE)}/>
           <FormRow type='text' name='remarks' defaultValue={job.remarks}/>
-          <SubmitBtn formBtn />
         </div>
+          <SubmitBtn formBtn />
       </Form>
     </Wrapper>
   )

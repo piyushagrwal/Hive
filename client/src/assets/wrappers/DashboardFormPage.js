@@ -28,6 +28,9 @@ const Wrapper = styled.section`
     margin-top: 1rem;
     display: grid;
     place-items: center;
+    margin-top: 25px;
+    margin-left: 35%;
+    width: 30%;
   }
   @media (min-width: 992px) {
     .form-center {

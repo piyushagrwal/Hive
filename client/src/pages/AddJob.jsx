@@ -34,8 +34,8 @@ const AddJob = () => {
           <FormRowSelect labelText='Job Status' name='jobStatus' defaultValue={JOB_STATUS.PENDING} list={Object.values(JOB_STATUS)}/>
           <FormRowSelect labelText='Job Type' name='jobType' defaultValue={JOB_TYPE.FULL_TIME} list={Object.values(JOB_TYPE)}/>
           <FormRow type='text' name='remarks'/>
-          <SubmitBtn formBtn />
         </div>
+          <SubmitBtn formBtn />
       </Form>
     </Wrapper>
   )

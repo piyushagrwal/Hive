@@ -35,8 +35,8 @@ const SearchContainer = () => {
                   defaultValue={jobType} onChange={(e) => {submit(e.currentTarget.form)}}/>
           <FormRowSelect  name='sort' list={[...Object.values(JOB_SORT_BY)]} defaultValue={sort} 
                 onChange={(e) => {submit(e.currentTarget.form)}}/>
-          <Link to='/dashboard/all-jobs' className='btn form-btn delete-btn'>Reset Search Values</Link>
         </div>
+          <Link to='/dashboard/all-jobs' className='btn form-btn delete-btn'>Reset Search Values</Link>
       </Form>
     </Wrapper>
   )
