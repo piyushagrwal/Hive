@@ -31,8 +31,9 @@ export const action = (queryClient) => async({request, params}) => {
   const data = Object.fromEntries(formData);
   try {
     await customFetch.patch(`/jobs/${params.id}`, data);
-    queryClient.invalidateQueries(['jobs']);
-    queryClient.invalidateQueries(['stats']);
+    await queryClient.invalidateQueries(['jobs']);
+    await queryClient.invalidateQueries(['job']);
+    await queryClient.invalidateQueries(['stats']);
     toast.success('Job edited successfully');
     return redirect('/dashboard/all-jobs');
   } catch (error) {
@@ -51,10 +52,10 @@ const EditJob = () => {
         <div className="form-center">
           <FormRow type='text' name='position' defaultValue={job.position}/>
           <FormRow type='text' name='company' defaultValue={job.company}/>
-          <FormRow type='text' name='jobLocation' defaultValue={job.jobLocation}/>
+          <FormRow type='text' name='jobLocation' labelText='Job Location' defaultValue={job.jobLocation}/>
           <FormRowSelect name='jobStatus' labelText='Job status' defaultValue={job.jobStatus} list={Object.values(JOB_STATUS)}/>
           <FormRowSelect name='jobType' labelText='Job type' defaultValue={job.jobType} list={Object.values(JOB_TYPE)}/>
-          <FormRow type='text' name='remarks' defaultValue={job.remarks}/>
+          <FormRow type='text' name='remarks' labelText='Remarks' defaultValue={job.remarks}/>
         </div>
           <SubmitBtn formBtn />
       </Form>
