@@ -26,8 +26,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const loginWithGoogle = async() => {
-    const url = `${process.env.WEBSITE_URL}/api/v1/auth/google/callback`;
-    window.open(url,'_self');
+    window.open('https://hive-upjh.onrender.com//api/v1/auth/google/callback','_self');
   }
 
   const loginDemoUser = async() => {
