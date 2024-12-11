@@ -5,6 +5,9 @@ import express from 'express';
 import cloudinary from 'cloudinary';
 import helmet from 'helmet';
 import mongSanitize from 'express-mongo-sanitize';
+import passport from 'passport';
+import session from 'express-session';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
 //Show log for request type and status
 import morgan from 'morgan';
@@ -41,6 +44,37 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
 app.use(mongSanitize());
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+})
+passport.deserializeUser((obj, done) => {
+    done(null, obj);
+})
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: 'http://localhost:5173/api/v1/auth/google/callback',
+    scope: ["profile", "email"]
+},
+async(accessToken, refreshToken, profile, done) => {
+    try {
+        return done(null, profile);
+    } catch (error) {
+        return done(error, null)
+    }
+    }
+))
 
 const port = process.env.PORT || 5100;
 

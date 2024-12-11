@@ -12,6 +12,26 @@ export const register = async (req, res) => {
     res.status(StatusCodes.CREATED).json({"message": 'user created'});
 }
 
+export const loginGoogle = async(req, res) => {
+    let user = await User.findOne({email: req.user.emails[0].value});
+    if(!user){
+        user = await User.create({
+            name: req.user.name.givenName,
+            lastName: req.user.name.familyName,
+            email: req.user.emails[0].value,
+            role: 'user',
+        });
+    }
+    const token = createJWT({userId: user._id, role: user.role});
+    const oneDay = 1000 * 60 * 60 * 24 ;
+    res.cookie('token', token, {
+        httpOnly: true,
+        expires: new Date(Date.now() + oneDay),
+        secure: process.env.NODE_ENV === 'production'
+    })
+    res.redirect(process.env.WEBSITE_URL);
+}
+
 export const login = async (req, res) => {
     const user = await User.findOne({email: req.body.email});
     const isVaildUser = user && (await comparePassword(req.body.password , user.password));
