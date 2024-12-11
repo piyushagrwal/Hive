@@ -26,7 +26,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const loginWithGoogle = async() => {
-    window.open('http://localhost:5173/api/v1/auth/google/callback','_self');
+    const url = `${process.env.WEBSITE_URL}/api/v1/auth/google/callback`;
+    window.open(url,'_self');
   }
 
   const loginDemoUser = async() => {
